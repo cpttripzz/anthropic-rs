@@ -123,6 +123,12 @@ pub struct Usage {
     pub output_tokens: usize,
 }
 
+
+/// Response body for the Messages API.
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq, Serialize)]
+pub struct TokenCountResponse {
+    pub input_tokens: usize,
+}
 /// Response body for the Messages API.
 #[derive(Debug, Deserialize, Clone, PartialEq, Eq, Serialize)]
 pub struct MessagesResponse {

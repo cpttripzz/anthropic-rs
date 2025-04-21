@@ -10,7 +10,7 @@ use crate::config::AnthropicConfig;
 use crate::error::{map_deserialization_error, AnthropicError, WrappedError};
 use crate::types::{
     CompleteRequest, CompleteResponse, CompleteResponseStream, MessagesRequest, MessagesResponse,
-    MessagesResponseStream, StreamError,
+    MessagesResponseStream, StreamError, TokenCountResponse,
 };
 use crate::{
     API_VERSION, API_VERSION_HEADER_KEY, AUTHORIZATION_HEADER_KEY, CLIENT_ID, CLIENT_ID_HEADER_KEY, DEFAULT_API_BASE,
@@ -64,6 +64,9 @@ impl Client {
             return Err(AnthropicError::InvalidArgument("When stream is true, use complete_stream() instead".into()));
         }
         self.post("/v1/messages", request).await
+    }
+    pub async fn token_count(&self, request: MessagesRequest) -> Result<TokenCountResponse, AnthropicError> {
+        self.post("/v1/messages/count_tokens", request).await
     }
 
     pub async fn messages_stream(&self, request: MessagesRequest) -> Result<MessagesResponseStream, AnthropicError> {
