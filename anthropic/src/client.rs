@@ -9,8 +9,7 @@ use tokio_stream::{Stream, StreamExt};
 use crate::config::AnthropicConfig;
 use crate::error::{map_deserialization_error, AnthropicError, WrappedError};
 use crate::types::{
-    CompleteRequest, CompleteResponse, CompleteResponseStream, MessagesRequest, MessagesResponse,
-    MessagesResponseStream, StreamError, TokenCountResponse,
+    CompleteRequest, CompleteResponse, CompleteResponseStream, MessagesRequest, MessagesResponse, MessagesResponseStream, StreamError, TokenCountRequest, TokenCountResponse
 };
 use crate::{
     API_VERSION, API_VERSION_HEADER_KEY, AUTHORIZATION_HEADER_KEY, CLIENT_ID, CLIENT_ID_HEADER_KEY, DEFAULT_API_BASE,
@@ -65,7 +64,7 @@ impl Client {
         }
         self.post("/v1/messages", request).await
     }
-    pub async fn token_count(&self, request: MessagesRequest) -> Result<TokenCountResponse, AnthropicError> {
+    pub async fn token_count(&self, request: TokenCountRequest) -> Result<TokenCountResponse, AnthropicError> {
         self.post("/v1/messages/count_tokens", request).await
     }
 

@@ -101,6 +101,25 @@ pub struct MessagesRequest {
     pub top_k: Option<usize>,
 }
 
+
+#[derive(Clone, Serialize, Default, Debug, Builder, PartialEq)]
+#[builder(pattern = "mutable")]
+#[builder(setter(into, strip_option), default)]
+#[builder(derive(Debug))]
+#[builder(build_fn(error = "AnthropicError"))]
+pub struct TokenCountRequest {
+    /// The User/Assistent prompts.
+    pub messages: Vec<Message>,
+    /// The System prompt.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub system: String,
+    /// The model to use.
+    #[builder(default = "DEFAULT_MODEL.to_string()")]
+    pub model: String,
+
+    
+}
+
 /// Reason for stopping the response generation.
 #[derive(Copy, Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
